@@ -29,27 +29,22 @@ class _GameScreenState extends State<GameScreen> {
   int _currentPlayer = 0;
   Board _board;
   Player _winner;
+  Map<int, Color> _idToColor;
 
   @override
   void initState() {
     super.initState();
     _board = Board(columns: widget.columns, rows: widget.rows);
+    _idToColor = {};
+    for (var player in widget.players) {
+      _idToColor[player.id] = player.color;
+    }
   }
 
   @override
   Widget build(BuildContext context) {
     if (_board.winner != null) {
       _winner = widget.players.firstWhere((player) => player.id == _board.winner);
-    }
-    Map<int, Color> idToColor = {};
-    for (var cell in _board.cells) {
-      if (cell.owner == null || idToColor.containsKey(cell.owner)) {
-        continue;
-      }
-      var player = widget.players.firstWhere((player) => player.id == cell.owner);
-      if (player != null) {
-        idToColor[player.id] = player.color;
-      }
     }
 
     return WillPopScope(
@@ -145,7 +140,7 @@ class _GameScreenState extends State<GameScreen> {
                           style: TextStyle(
                             color: cell.owner == null
                               ? Colors.grey[500].withOpacity(0.4)
-                              : idToColor[cell.owner],
+                              : _idToColor[cell.owner],
                             fontSize: 16,
                           )
                         ),
