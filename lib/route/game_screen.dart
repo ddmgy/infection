@@ -57,14 +57,12 @@ class _GameScreenState extends State<GameScreen> {
         appBar: AppBar(
           title: const Text("Game"),
           actions: [
-            IconButton(
+            if (canSkip) IconButton(
               icon: Icon(Icons.skip_next),
               tooltip: "Skip turn",
-              onPressed: !canSkip
-                ? null
-                : () {
-                  _nextPlayer();
-                }
+              onPressed: () {
+                _nextPlayer();
+              },
             ),
           ],
         ),
