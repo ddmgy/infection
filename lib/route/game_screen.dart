@@ -63,9 +63,7 @@ class _GameScreenState extends State<GameScreen> {
               onPressed: !canSkip
                 ? null
                 : () {
-                  setState(() {
-                    _nextPlayer();
-                  });
+                  _nextPlayer();
                 }
             ),
           ],
