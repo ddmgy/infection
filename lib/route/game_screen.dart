@@ -6,6 +6,7 @@ import 'package:infection/game/player.dart';
 import 'package:infection/game/position.dart';
 import 'package:infection/route/game_arguments.dart';
 import 'package:infection/route/routes.dart';
+import 'package:infection/utils.dart';
 
 typedef PositionCallback = void Function(Position position);
 
@@ -85,7 +86,7 @@ class _GameScreenState extends State<GameScreen> {
                       height: 40,
                       color: (outOfRange || !isSelected)
                         ? Colors.transparent
-                        : Colors.white,
+                        : Theme.of(context).backgroundColor.foregroundColor,
                       child: Center(
                         child: Container(
                           width: 36,
@@ -130,9 +131,17 @@ class _GameScreenState extends State<GameScreen> {
                 ),
                 itemBuilder: (BuildContext context, int index) {
                   Cell cell = _board.cells[index];
+                  Color backgroundColor;
+                  if (cell.owner != null) {
+                    backgroundColor = _idToColor[cell.owner];
+                  } else {
+                    backgroundColor = Theme.of(context).cardColor;
+                  }
+                  backgroundColor = backgroundColor.darken(amount: 10 + 5 * cell.count);
+                  Color foregroundColor = backgroundColor.foregroundColor;
 
                   return Card(
-                    color: Colors.grey[800],
+                    color: backgroundColor,
                     child: InkWell(
                       onTap: _winner != null
                         ? null
@@ -143,18 +152,14 @@ class _GameScreenState extends State<GameScreen> {
                           );
                           var currentId = widget.players[_currentPlayer].id;
                           if (_board.move(clickPosition, currentId)) {
-                            setState(() {
-                              _currentPlayer = (_currentPlayer + 1) % widget.players.length;
-                            });
+                            _nextPlayer();
                           }
                       },
                       child: Center(
                         child: Text(
                           "${cell.count}",
                           style: TextStyle(
-                            color: cell.owner == null
-                              ? Colors.grey[500].withOpacity(0.4)
-                              : _idToColor[cell.owner],
+                            color: foregroundColor,
                             fontSize: 16,
                           )
                         ),
