@@ -100,6 +100,10 @@ class Board {
     return false;
   }
 
+  bool hasAvailableMove(int ownerId) {
+    return cells.any((cell) => cell.count == 0 || cell.owner == ownerId);
+  }
+
   List<Cell> neighbors(Position pos) {
     List<Cell> result = [];
     for (var dir in Position.all) {

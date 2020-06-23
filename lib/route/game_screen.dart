@@ -46,6 +46,7 @@ class _GameScreenState extends State<GameScreen> {
     if (_board.winner != null) {
       _winner = widget.players.firstWhere((player) => player.id == _board.winner);
     }
+    bool canSkip = !_board.hasAvailableMove(widget.players[_currentPlayer].id);
 
     return WillPopScope(
       onWillPop: () async {
@@ -54,6 +55,19 @@ class _GameScreenState extends State<GameScreen> {
       child: Scaffold(
         appBar: AppBar(
           title: const Text("Game"),
+          actions: [
+            IconButton(
+              icon: Icon(Icons.skip_next),
+              tooltip: "Skip turn",
+              onPressed: !canSkip
+                ? null
+                : () {
+                  setState(() {
+                    _nextPlayer();
+                  });
+                }
+            ),
+          ],
         ),
         body: Center(
           child: Column(
@@ -154,6 +168,12 @@ class _GameScreenState extends State<GameScreen> {
         ),
       ),
     );
+  }
+
+  void _nextPlayer() {
+    setState(() {
+      _currentPlayer = (_currentPlayer + 1) % widget.players.length;
+    });
   }
 
   Future<bool> _showConfirmDialog() async {
