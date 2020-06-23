@@ -10,10 +10,8 @@ import 'package:infection/route/routes.dart';
 import 'package:infection/utils.dart';
 
 const List<Color> _colorPickerColors = [
-  Colors.red, Colors.blue, Colors.green, Colors.yellow,
-  Colors.pink, Colors.indigo, Colors.teal, Colors.orange,
-  Colors.purple, Colors.deepPurple, Colors.brown, Colors.deepOrange,
-  Colors.blueGrey,
+  Colors.red, Colors.blue, Colors.green,
+  Colors.yellow, Colors.pink, Colors.deepPurple,
 ];
 
 class SetupScreen extends StatefulWidget {
@@ -22,6 +20,8 @@ class SetupScreen extends StatefulWidget {
 }
 
 class _SetupScreenState extends State<SetupScreen> {
+  int _minPlayerCount = 2;
+  int _maxPlayerCount = 5;
   int _size = 5;
   List<Player> _players = [];
 
@@ -34,7 +34,7 @@ class _SetupScreenState extends State<SetupScreen> {
           IconButton(
             icon: const Icon(Icons.add),
             tooltip: "Add new player",
-            onPressed: _players.length < 8
+            onPressed: _players.length < _maxPlayerCount
               ? () {
                 _showCreatePlayerDialog();
               }
@@ -43,7 +43,7 @@ class _SetupScreenState extends State<SetupScreen> {
           IconButton(
             icon: const Icon(Icons.play_arrow),
             tooltip: "Play game",
-            onPressed: _players.length < 2
+            onPressed: _players.length < _minPlayerCount
               ? null
               : () {
                 Navigator.pushReplacementNamed(
