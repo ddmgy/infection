@@ -17,7 +17,7 @@ extension ListExtensions<T> on List<T> {
 }
 
 double clamp(double n, {double min: 0.0, double max: 1.0}) {
-  return Math.min(max, Math.max(min, n));
+  return n.clamp(min, max);
 }
 
 extension ColorExtensions on Color {
@@ -25,12 +25,12 @@ extension ColorExtensions on Color {
     return (red * .299 + green * .587 + blue * .114);
   }
 
-  bool get isDark => brightness > 128.0;
+  bool get isDark => brightness < 128.0;
 
   bool get isLight => !isDark;
 
   Color get foregroundColor {
-    if (brightness > 128.0) {
+    if (isLight) {
       return Colors.black;
     } else {
       return Colors.white;

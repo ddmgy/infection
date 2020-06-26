@@ -29,8 +29,6 @@ class Board {
     }
   }
 
-  Cell getAtXY(int x, int y) => getAtPosition(Position(x, y));
-
   Cell getAtPosition(Position pos) {
     if (pos.x < 0 || pos.x >= columns || pos.y < 0 || pos.y >= rows) {
       return null;

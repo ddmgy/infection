@@ -15,22 +15,31 @@ class _HomeScreenState extends State<HomeScreen> {
     return Scaffold(
       appBar: AppBar(
         title: const Text("Infection"),
+        actions: [
+          IconButton(
+            icon: Icon(Icons.help),
+            onPressed: _showAboutDialog,
+          ),
+        ],
       ),
       body: Center(
         child: Column(
+          mainAxisSize: MainAxisSize.min,
+          crossAxisAlignment: CrossAxisAlignment.stretch,
           children: [
-            RaisedButton(
-              child: const Text("Play Game"),
-              onPressed: () {
-                Navigator.pushNamed(context, Routes.setup);
-              },
+            Card(
+              child: InkWell(
+                child: Container(
+                  child: const Text("Play game"),
+                  height: 48,
+                  alignment: Alignment.center,
+                ),
+                onTap: () => Navigator.pushNamed(context, Routes.setup),
+              ),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(4),
+              ),
             ),
-            RaisedButton(
-              child: const Text("About"),
-              onPressed: () {
-                _showAboutDialog();
-              },
-            )
           ],
         ),
       ),

@@ -1,7 +1,7 @@
 name: infection
 description: "An implementation of the Chain Reaction game in Flutter."
 author: "David Mougey <imapiekindaguy@gmail.com>"
-version: 1.0.5
+version: 1.0.6
 homepage: "https://github.com/ddmgy/infection"
 
 publish_to: 'none' # Remove this line if you wish to publish to pub.dev
